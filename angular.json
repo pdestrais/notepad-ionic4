@@ -30,7 +30,10 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/@ionic/angular/dist/ionic/svg",
                 "output": "./svg"
-              }
+              },
+              { "glob": "**/*", 
+                "input": "node_modules/markdowntohtml-component/dist", 
+                "output": "./markdowntohtml-component" }
             ],
             "styles": [
               {
