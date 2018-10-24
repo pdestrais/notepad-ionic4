@@ -1,21 +1,27 @@
+import './polyfills';
+
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-//import { defineCustomElements } from 'markdowntohtml-component/dist/loader';
-//import { defineCustomElements as DCE1 } from 'c-coffee-icon';
+import { defineCustomElements } from '@pdestrais/mdtohtml';
 
 if (environment.production) {
   enableProdMode();
 }
 
-//const win = window as any;
-platformBrowserDynamic().bootstrapModule(AppModule)
+platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+    // Ensure Angular destroys itself on hot reloads.
+    if (window['ngRef']) {
+      window['ngRef'].destroy();
+    }
+    window['ngRef'] = ref;
+
+    // Otherise, log the boot error
+  })
   .catch(err => console.log(err));
-/* if (typeof win !== 'undefined') {
-  defineCustomElements(win);
-  DCE1(win);
-}
- */
+
+  // initialize used stencil components
+  defineCustomElements(window);

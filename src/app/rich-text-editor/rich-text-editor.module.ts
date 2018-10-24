@@ -1,17 +1,18 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DetailPage } from './detail.page';
+import { RichTextEditorPage } from './rich-text-editor.page';
 import { NgxWigModule } from '../ngx-wig/ngx-wig.module';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: DetailPage
+    component: RichTextEditorPage
   }
 ];
 
@@ -23,7 +24,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgxWigModule
   ],
-  declarations: [DetailPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [RichTextEditorPage]
 })
-export class DetailPageModule {}
+export class RichTextEditorPageModule {}

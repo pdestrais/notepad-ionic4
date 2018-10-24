@@ -9,17 +9,16 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { WebComponentsModule } from './web-components/web-components.module';
+import { NgxWigModule } from './ngx-wig/ngx-wig.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, 
             IonicModule.forRoot(), 
-            WebComponentsModule.forRoot(),
             AppRoutingModule, 
-            IonicStorageModule.forRoot()],
+            IonicStorageModule.forRoot(),
+            NgxWigModule],
   providers: [
     StatusBar,
     SplashScreen,

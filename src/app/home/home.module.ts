@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
-import { WebComponentsModule } from '../web-components/web-components.module';
 
 
 @NgModule({
@@ -18,8 +17,7 @@ import { WebComponentsModule } from '../web-components/web-components.module';
         path: '',
         component: HomePage
       }
-    ]),
-    WebComponentsModule
+    ])
   ],
   declarations: [HomePage]
 })

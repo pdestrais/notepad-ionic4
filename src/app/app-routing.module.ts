@@ -5,6 +5,9 @@ const routes: Routes = [
   { path: '', redirectTo: 'notes', pathMatch: 'full' },
   { path: 'notes', loadChildren: './home/home.module#HomePageModule' },
   { path: 'notes/:id', loadChildren: './detail/detail.module#DetailPageModule' },
+  { path: 'preferences', loadChildren: './preferences/preferences.module#PreferencesPageModule' },
+  { path: 'richTextEditor', loadChildren: './rich-text-editor/rich-text-editor.module#RichTextEditorPageModule' },
+  { path: 'ngx-wig', loadChildren: './ngx-wig/ngx-wig.module#NgxWigModule' },
 ];
 
 @NgModule({

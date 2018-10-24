@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, MenuController } from '@ionic/angular';
+import { DataService } from '../services/data.service';
 import { NotesService } from '../services/notes.service';
+import { Note } from '../interfaces/note';
  
 @Component({
   selector: 'app-home',
@@ -9,17 +11,29 @@ import { NotesService } from '../services/notes.service';
 })
 export class HomePage implements OnInit {
  
-  constructor(private notesService: NotesService, private alertCtrl: AlertController, private navCtrl: NavController){
+  notes : any;
+
+  constructor(/* private notesService: NotesService */ private dataService:DataService, private alertCtrl: AlertController, private navCtrl: NavController, private menuCtrl: MenuController){
  
   }
  
   ngOnInit(){
     console.log("[HomePage - ngOnInit] entering method")
-    this.notesService.load();
+    this.dataService.dataServiceSubject.subscribe(event => {
+      if (event.message == "ReplicationCompleted") {
+        this.dataService.fetch().then((data) => {
+          let notes = data.rows.map(row => {
+              return row.doc;
+          });
+          this.notes = notes;
+          console.log("[dataServiceSubject]fetching all notes : "+JSON.stringify(this.notes));
+      })  
+      }
+    })
+
   }
  
   addNote(){
- 
     this.alertCtrl.create({
       header: 'New Note',
       message: 'What should the title of this note be?',
@@ -36,7 +50,8 @@ export class HomePage implements OnInit {
         {
           text: 'Save',
           handler: (data) => {
-            this.notesService.createNote(data.title);
+            let note:any = {title: data.title, content: '', tags: [], type:'note'};
+            this.dataService.saveDoc(note,"note");
           }
         }
       ]
@@ -44,6 +59,10 @@ export class HomePage implements OnInit {
       alert.present();
     });
  
+  }
+
+  showMenu() {
+    this.menuCtrl.open("mainMenu");
   }
  
 }

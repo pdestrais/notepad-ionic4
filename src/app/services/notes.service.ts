@@ -1,81 +1,62 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
- 
+import { Injectable, NgZone } from '@angular/core';
+
 import { Note } from '../interfaces/note';
- 
+import { DataService } from './data.service';
+import { Subject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
  
-  public notes: Note[] = [];
-  public loaded: boolean = false;
- 
-  constructor(private storage: Storage) {
- 
-  }
- 
-  load(): Promise<boolean> {
- 
-    // Return a promise so that we know when this operation has completed
-    return new Promise((resolve) => {
- 
-      // Get the notes that were saved into storage
-      this.storage.get('notes').then((notes) => {
- 
-        // Only set this.notes to the returned value if there were values stored
-        if(notes != null){
-          this.notes = notes;
-        }
- 
-        // This allows us to check if the data has been loaded in or not
-        this.loaded = true;
-        resolve(true);
- 
+  noteSubject: any = new Subject();  
+
+  constructor(public dataService: DataService, public zone: NgZone) {
+      this.dataService.db.changes({live: true, since: 'now', include_docs: true}).on('change', (change) => {
+          console.log('[NotesService - constructor]db change : '+JSON.stringify(change));
+          if(change.doc.type === 'note'){
+              this.emitNotes();
+          }
       });
- 
-    });
- 
   }
- 
-  save(): void {
-    // Save the current array of notes to storage
-    this.storage.set('notes', this.notes);
+;
+  getNote(id:string) : any {
+   return this.dataService.db.get(id);
   }
- 
-  getNote(id): Note {
-    // Return the note that has an id matching the id passed in
-    return this.notes.find(note => note.id === id);
+
+  getNotes(){
+      this.emitNotes();
+      return this.noteSubject;
   }
- 
-  createNote(title): void {
- 
-    // Create a unique id that is one larger than the current largest id
-    let id = Math.max(...this.notes.map(note => parseInt(note.id)), 0) + 1;
- 
-    this.notes.push({
-      id: id.toString(),
-      rev: '',
-      title: title,
-      content: '',
-      tags: []
-    });
- 
-    this.save();
- 
+
+  createNote(note:Note): void {
+      this.dataService.db.post({title:note.title,type:'note',content:'',tags:[]});
   }
- 
-  deleteNote(note): void {
- 
-    // Get the index in the array of the note that was passed in
-    let index = this.notes.indexOf(note);
- 
-    // Delete that element of the array and resave the data
-    if(index > -1){
-      this.notes.splice(index, 1);
-      this.save();
-    }
- 
+
+  saveNote(note:Note) {
+    console.log('[NotesService - saveNote]note : '+JSON.stringify(note));
+    return this.dataService.db.put({_id:note._id,_rev:note._rev,title:note.title,content:note.content});
   }
- 
+
+  deleteNote(note:Note) {
+    note._deleted = true;
+    console.log('[NotesService - deleteNote with id :'+note._id+' - rev :'+note._rev+" - deleted :"+note._deleted);
+    return this.saveNote(note);
+  }
+
+  emitNotes(): void {
+      this.zone.run(() => {
+          this.dataService.db.allDocs({include_docs:true}).then((data) => {
+              let notes = data.rows.map(row => {
+                  return row.doc;
+              });
+              this.noteSubject.next(notes);
+          });
+      });
+  }
+
 }
+
+// notes cloudant DB credentials
+// Key:osessysearzandelasimerst
+// Password:fcea299f5f85d15ba2db779ddd35a832092c24bb
