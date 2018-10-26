@@ -138,11 +138,11 @@ export class NgxWigComponent implements OnInit, OnChanges, ControlValueAccessor 
                 break;
       case 'insertBlockCode':
                 if (selection === '') 
-                  document.execCommand('insertText',false,'>     ')
+                  document.execCommand('insertText',false,'    ')
                 else
-                  document.execCommand('insertText',false,'>     '+selection);
+                  document.execCommand('insertText',false,'    '+selection);
                 break;
-      case 'insertOrderedList':
+      case 'insertUnorderedList':
                 if (selection === '') 
                   document.execCommand('insertText',false,'- ')
                 else
@@ -154,6 +154,24 @@ export class NgxWigComponent implements OnInit, OnChanges, ControlValueAccessor 
                 else
                   document.execCommand('insertText',false,'1. '+selection);
                 break;
+      case 'insertQuote':
+                if (selection === '') 
+                  document.execCommand('insertText',false,'> ')
+                else
+                  document.execCommand('insertText',false,'> '+selection);
+                break;
+      case 'insertCode':
+                if (selection === '') 
+                  document.execCommand('insertText',false,'`')
+                else
+                  document.execCommand('insertText',false,'`'+selection);
+                break;
+      case 'insertHorizontalLine':
+                if (selection === '') 
+                  document.execCommand('insertText',false,'***')
+                else
+                  document.execCommand('insertText',false,'***'+selection);
+                break;
       default:
                 if (selection === '') 
                   document.execCommand(command, false, options);
@@ -162,7 +180,7 @@ export class NgxWigComponent implements OnInit, OnChanges, ControlValueAccessor 
                 break;
                 
     }
-    this.onContentChange(this.container.innerHTML, this.container.innerText);
+    this.onContentChange(this.container.textContent);
 
 /*     if (command === 'createlink' || command === 'insertimage') {
       options = window.prompt('Please enter the URL', 'http://');
@@ -193,9 +211,8 @@ export class NgxWigComponent implements OnInit, OnChanges, ControlValueAccessor 
     }
   }
 
-  public onContentChange(newContent: string,newTextContent?: string): void {
+  public onContentChange(newContent: string): void {
     this.content = newContent;
-    this.textContent = newTextContent;
     this.contentChange.emit(this.content);
     this.propagateChange(this.content);
   }
@@ -212,20 +229,20 @@ export class NgxWigComponent implements OnInit, OnChanges, ControlValueAccessor 
 
   public onTextareaChange(newContent: string): void {
     // model -> view
-    this.container.innerHTML = newContent;
+    this.container.textContent = newContent;
     this.onContentChange(newContent);
   }
 
   public writeValue(value: any): void {
     if (!value) { value = ''; }
 
-    this.container.innerHTML = value;
+    //this.container.textContent = value;
     this.onContentChange(value);
   }
 
   public shouldShowPlaceholder(): boolean {
     return this.placeholder
-      && !this.container.innerText;
+      && !this.container.textContent;
   }
 
   private pasteHtmlAtCaret(html) {

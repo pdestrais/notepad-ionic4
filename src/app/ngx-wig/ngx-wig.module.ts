@@ -14,10 +14,10 @@ export * from '../services/ngx-wig-toolbar.service';
     ReactiveFormsModule
   ],
   declarations: [
-    NgxWigComponent,
+    NgxWigComponent
   ],
   exports: [
-    NgxWigComponent,
+    NgxWigComponent
   ],
   providers: [ NgxWigToolbarService ]
 })

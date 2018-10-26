@@ -25,8 +25,6 @@
     "@ionic-native/status-bar": "5.0.0-beta.21",
     "@ionic/angular": "4.0.0-beta.12",
     "@ionic/storage": "^2.2.0",
-    "@pdestrais/mdtohtml": "0.0.1",
-    "c-coffee-icon": "0.0.2",
     "core-js": "^2.5.3",
     "pouchdb": "^6.4.2",
     "rxjs": "6.2.2",

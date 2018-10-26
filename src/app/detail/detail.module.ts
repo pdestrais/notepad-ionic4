@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DetailPage } from './detail.page';
 import { NgxWigModule } from '../ngx-wig/ngx-wig.module';
+import { MdtohtmlPageModule } from '../mdtohtml/mdtohtml.module';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    NgxWigModule
+    NgxWigModule,
+    MdtohtmlPageModule
   ],
   declarations: [DetailPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

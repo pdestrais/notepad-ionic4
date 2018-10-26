@@ -284,6 +284,18 @@
       content: '\f169';
     }
 
+    .nw-button-mdi.quote:before {
+      content: '\f756';
+    }
+
+    .nw-button-mdi.code:before {
+      content: '\f174';
+    }
+
+    .nw-button-mdi.horizontalLine:before {
+      content: '\f753';
+    }
+
     .nw-button:focus {
       outline: none;
     }

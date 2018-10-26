@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Storage } from '@ionic/storage';
 import { Note } from '../interfaces/note';
-import { NgxWigToolbarService } from '../services/ngx-wig-toolbar.service';
  
 @Component({
   selector: 'app-detail',
@@ -15,9 +14,8 @@ export class DetailPage implements OnInit {
  
   private note: Note;
   private mode: string;
-  private name="hello";
  
-  constructor(private route: ActivatedRoute, private dataService: DataService, private storage: Storage, private navCtrl: NavController, private router: Router, private ngxTB:NgxWigToolbarService) {
+  constructor(private route: ActivatedRoute, private dataService: DataService, private storage: Storage, private navCtrl: NavController, private router: Router) {
  
     // Initialise a placeholder note until the actual note can be loaded in
     this.note = {
@@ -33,7 +31,6 @@ export class DetailPage implements OnInit {
   }
  
   ngOnInit() {
- 
     // Get the id of the note from the URL
     let noteId = this.route.snapshot.paramMap.get('id');
     // Check that the data is loaded before getting the note
@@ -44,7 +41,6 @@ export class DetailPage implements OnInit {
         console.log("[DetailPage - deleteNote]note affichée : "+JSON.stringify(this.note));
       }
     }); 
-    this.ngxTB.addStandardButton("insertText","insertText","insertText","font-color");
   }
  
   noteChanged($event){
@@ -54,10 +50,6 @@ export class DetailPage implements OnInit {
     console.log("[DetailPage - noteChanged]note changée : "+JSON.stringify(this.note));
      this.storage.set("infly",this.note);
 */      console.log("[DetailPage - noteChanged]event : "+$event);
-  }
-
-  insertInNote() {
-
   }
 
   saveNote() {

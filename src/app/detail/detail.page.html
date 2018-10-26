@@ -11,9 +11,6 @@
       <ion-button *ngIf="mode=='view'" (click)="quitMarkdownViewMode()">
           <ion-icon slot="icon-only" name="exit"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="mode=='edit'" (click)="insertInNote()">
-          <ion-icon slot="icon-only" name="beer"></ion-icon>
-      </ion-button>
       <ion-button *ngIf="mode=='edit'" (click)="saveNote()">
           <ion-icon slot="icon-only" name="save"></ion-icon>
       </ion-button>
@@ -24,14 +21,11 @@
   </ion-toolbar>
 </ion-header>
  
-<ion-content padding color="light" >
+<ion-content padding>
   <div *ngIf="mode=='edit'">
-      <ngx-wig [(ngModel)]="note.content" [buttons]="'bold,italic,link,heading1,heading2,heading3,uList,oList,blockcode'" [isSourceModeAllowed]=true></ngx-wig>
+      <ngx-wig [(ngModel)]="note.content" [buttons]="'bold,italic,link,heading1,heading2,heading3,uList,oList,quote,code,blockcode,horizontalLine'" [isSourceModeAllowed]=true></ngx-wig>
   </div>
   <div *ngIf="mode=='view'">
-      <md-to-html *ngIf="mode=='view'" content={{note.content}}></md-to-html>
+      <app-mdtohtml *ngIf="mode=='view'" content={{note.content}}></app-mdtohtml>
   </div>
-<!--   <ion-textarea *ngIf="mode=='edit'" (ionChange)="noteChanged($event)" [(ngModel)]="note.content" placeholder="...something on your mind?"></ion-textarea>
-   <md-to-html *ngIf="mode=='view'" content={{note.content}}></md-to-html>
- -->
 </ion-content>

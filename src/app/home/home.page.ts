@@ -26,7 +26,7 @@ export class HomePage implements OnInit {
               return row.doc;
           });
           this.notes = notes;
-          console.log("[dataServiceSubject]fetching all notes : "+JSON.stringify(this.notes));
+          //console.log("[dataServiceSubject]fetching all notes : "+JSON.stringify(this.notes));
       })  
       }
     })

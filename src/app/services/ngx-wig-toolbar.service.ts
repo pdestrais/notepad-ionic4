@@ -22,7 +22,10 @@ export class NgxWigToolbarService {
     heading1: {title:'Insert Heading 1', command: 'insertHeading1', styleClass: 'heading1'},
     heading2: {title:'Insert Heading 2', command: 'insertHeading2', styleClass: 'heading2'},
     heading3: {title:'Insert Heading 3', command: 'insertHeading3', styleClass: 'heading3'},
-    blockcode: {title:'Insert Block code', command: 'insertBlockCode', styleClass: 'insertBlockCode'}
+    quote: {title:'Insert quote', command: 'insertQuote', styleClass: 'quote'},
+    code: {title:'Insert code', command: 'insertCode', styleClass: 'code'},
+    blockcode: {title:'Insert Block code', command: 'insertBlockCode', styleClass: 'insertBlockCode'},
+    horizontalLine: {title:'Insert Horizontal Line', command: 'insertHorizontalLine', styleClass: 'horizontalLine'}
   };
 
   private _defaultButtonsList = ['list1', 'list2', 'bold', 'italic', 'link'];

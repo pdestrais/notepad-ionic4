@@ -14,7 +14,7 @@
           </button>
         </div>
       </li><!--
-      --><li class="nw-toolbar__item">
+      --><!-- <li class="nw-toolbar__item">
       <button type="button"
               class="nw-button nw-button--source"
               title="Edit HTML"
@@ -26,7 +26,7 @@
               tabindex="-1">
         Edit HTML
       </button>
-    </li>
+    </li> -->
     </ul>
   
     <div class="nw-editor-container"
@@ -52,7 +52,7 @@
              [ngClass]="{ disabled: disabled}"
              (focus)="hasFocus = true"
              (blur)="onBlur()"
-             (input)="onContentChange(ngWigEditable.innerHTML,ngWigEditable.innerText)"><!--
+             (input)="onContentChange(ngWigEditable.textContent)"><!--
     --></div>
       </div>
     </div>
